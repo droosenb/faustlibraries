@@ -1401,14 +1401,17 @@ with{
 
 //----------------------`(dm.)second_order_RC_WDF`--------------------------
 // A virtual analog simulation of a passive, second order, RC filter
+// It is formed using two resistors and two capacitors in a ladder configuration
 // The circuit is modeled using a wave-digital filter model
 // The input is treated as a voltage input. 
-//R1 and C1 form the first filter, R2 and C2 form the second
+// R1 and C1 form the first filter, R2 and C2 form the second
+// The first output is the voltage across C2 (lowpass)
+// The second output is the voltage across R2 (highpass)
 //
 // #### Usage
 //
 // ```
-// _ : second_order_RC_WDF(R1, C1, R2, C2) : _;
+// _ : second_order_RC_WDF(R1, C1, R2, C2) : _, _;
 // ```
 // Where
 // 
