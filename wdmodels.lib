@@ -98,19 +98,12 @@
 
 // Note that the tree and components must be declared inside a `with{...}` statement, or the model's parameters will not be accessible. 
 
-// ##### Depreciated Input Method (Not Recommended)
+// ##### The Empty Signal Operator
 
-// It is also possible to declare inputs using the signal operator, `_`. For example, one might use
+// The Empty signal operator, `_` should NEVER be used to declare a parameter as in input in a wave-digital model. 
 
-// `vin(i) = wd.u_voltage(i, _);`
+// Using it will result on breaking the internal routing of the model and thus breaks the model. Instead, use explicit declaration as shown directly above. 
 
-// in order to simulate an audio input to the circuit.
-
-// However, since build functions do not have access to individual component parameter details, the task of declaring inputs using this method can quickly become complex and **is not recommended**. 
-
-// Only the root and bottom-most / left-most leaf element can accept a parameter input this way. 
-
-// Additionally, manual routing must be performed within the feedforward term as the function input/output mismatch will cause errors in the model. 
 
 
 // ### Trees in Faust
@@ -243,8 +236,9 @@ declare version "0.1.1";
 //=========================================================================================
 
 //----------------------`(wd.)resistor`--------------------------
-// Resistor
-// A basic adaptor implementing a resistor for use within Wave Digital Filter connection trees.
+// Adapted Resistor
+//
+// A basic node implementing a resistor for use within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
 //
@@ -263,6 +257,7 @@ declare version "0.1.1";
 // Note:
 // The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.1
 //----------------------------------------------------------
@@ -281,7 +276,8 @@ case{
 
 
 //----------------------`(wd.)resistor_output`--------------------------
-// Resistor + voltage Out.
+// Adapted Resistor + voltage Out.
+//
 // A basic adaptor implementing a resistor for use within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
@@ -321,6 +317,7 @@ case{
 
 //----------------------`(wd.)resistor_output_current`--------------------------
 // Resistor + current Out.
+//
 // A basic adaptor implementing a resistor for use within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
@@ -341,7 +338,9 @@ case{
 // Note: 
 // The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.1
 //----------------------------------------------------------
 declare resistor_output_current author "Dirk Roosenburg";
@@ -359,7 +358,8 @@ case{
 
 
 //----------------------`(wd.)u_voltage`--------------------------
-// Ideal Voltage Source (Unadapted).
+// Unadapted Ideal Voltage Source
+//
 // An adaptor implementing an ideal voltage source within Wave Digital Filter connection trees.
 //
 // It should be used as the root/top element of the connection tree.
@@ -381,7 +381,9 @@ case{
 // Only usable as the root of a tree
 // The adaptor must be declared as a seperate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.2
 //----------------------------------------------------------
 declare u_voltage author "Dirk Roosenburg";
@@ -399,7 +401,8 @@ case{
 
 
 //----------------------`(wd.)u_current`--------------------------
-// Resistive Current Source (Unadapted).
+// Unadapted Ideal Current Source
+//
 // An unadapted adaptor implementing an ideal current source within Wave Digital Filter connection trees.
 //
 // It should be used as the root/top element of the connection tree.
@@ -419,9 +422,11 @@ case{
 //
 // Note: 
 // Only usable as the root of a tree.
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.3
 //----------------------------------------------------------
 declare u_current author "Dirk Roosenburg";
@@ -438,8 +443,9 @@ case{
 };
 
 //----------------------`(wd.)resVoltage`--------------------------
-// Resistive Voltage Source.
-// An adaptor implementing a resitive voltage source within Wave Digital Filter connection trees.
+// Adapted Resistive Voltage Source
+//
+// An adaptor implementing a resistive voltage source within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
 // It is comprised of an ideal voltage source in series with a resistor.
@@ -455,13 +461,15 @@ case{
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared
-// * `R` : Resistance/Impedence of the series resistor in Ohms
+// * `R` : Resistance/Impedance of the series resistor in Ohms
 // * `ein` : Voltage/Potential of the ideal voltage source in Volts
 //
 // Note: 
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.4
 //----------------------------------------------------------
 declare resVoltage author "Dirk Roosenburg";
@@ -469,7 +477,7 @@ declare resVoltage copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosen
 declare resVoltage license "MIT-style STK-4.3 license";
 resVoltage = 
 case{
-    (0, R, ein) => R^(1-p)*ein;
+    (0, R, ein) => !, R^(1-p)*ein;
     (1, R, ein) => _; 
     (2, R, ein) => R0
     with {
@@ -478,8 +486,9 @@ case{
 }; 
 
 //----------------------`(wd.)resVoltage_output`--------------------------
-// Resistive Voltage Source + voltage output.
-// An adaptor implementing a resitive voltage source within Wave Digital Filter connection trees.
+// Adapted Resistive Voltage Source + voltage output.
+//
+// An adaptor implementing an adapted resistive voltage source within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
 // It is comprised of an ideal voltage source in series with a resistor.
@@ -496,13 +505,15 @@ case{
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared
-// * `R` : Resistance/Impedence of the series resistor in Ohms
+// * `R` : Resistance/Impedance of the series resistor in Ohms
 // * `ein` : Voltage/Potential across ideal voltage source in Volts
 //
 // Note: 
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.4
 //----------------------------------------------------------
 declare resVoltage_output author "Dirk Roosenburg";
@@ -519,8 +530,9 @@ case{
 }; 
 
 //----------------------`(wd.)u_resVoltage`--------------------------
-// Resistive Voltage Source (Unadapted).
-// An unadapted adaptor implementing a resitive voltage source within Wave Digital Filter connection trees.
+// Unadapted Resistive Voltage Source
+//
+// An unadapted adaptor implementing a resistive voltage source within Wave Digital Filter connection trees.
 //
 // It should be used as the root/top element of the connection tree.
 // It is comprised of an ideal voltage source in series with a resistor.
@@ -536,14 +548,16 @@ case{
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared
-// * `R` : Resistance/Impedence of the series resistor in Ohms
+// * `R` : Resistance/Impedance of the series resistor in Ohms
 // * `ein` : Voltage/Potential across ideal voltage source in Volts
 //
 // Note: 
 // Only usable as the root of a tree.
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.4
 //----------------------------------------------------------
 declare u_resVoltage author "Dirk Roosenburg";
@@ -562,8 +576,9 @@ case {
 
 
 //----------------------`(wd.)resCurrent`--------------------------
-// Resistive Current Source.
-// An adaptor implementing a resitive current source within Wave Digital Filter connection trees.
+// Unadapted Resistive Current Source
+//
+// An adaptor implementing a resistive current source within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
 // It is comprised of an ideal current source in parallel with a resistor.
@@ -579,13 +594,15 @@ case {
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared.
-// * `R` : Resistance/Impedence of the parallel resistor in Ohms
+// * `R` : Resistance/Impedance of the parallel resistor in Ohms
 // * `jin` : Current through the ideal current source in Amps
 //
 // Note: 
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.5
 //----------------------------------------------------------
 declare resCurrent author "Dirk Roosenburg";
@@ -602,8 +619,9 @@ case {
 }; 
 
 //----------------------`(wd.)u_resCurrent`--------------------------
-// Resistive Current Source (Uadapted).
-// An unadapted adaptor implementing a resitive current source within Wave Digital Filter connection trees.
+// Unadapted Resistive Current Source 
+//
+// An unadapted adaptor implementing a resistive current source within Wave Digital Filter connection trees.
 //
 // It should be used as the root/top element of the connection tree
 // It is comprised of an ideal current source in parallel with a resistor
@@ -619,14 +637,16 @@ case {
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared.
-// * `R` : Resistance/Impedence of the series resistor in Ohms
+// * `R` : Resistance/Impedance of the series resistor in Ohms
 // * `jin` : Current through the ideal current source in Amps
 //
 // Note: 
 // Only usable as the root of a tree.
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.5
 //----------------------------------------------------------
 declare u_resCurrent author "Dirk Roosenburg";
@@ -647,7 +667,8 @@ case {
 //add short circuit (1.2.6), add open circuit (1.2.7)
 
 //----------------------`(wd.)u_switch`--------------------------
-// Ideal Switch (Unadapted).
+// Unadapted Ideal Switch
+//
 // An unadapted adaptor implementing an ideal switch for Wave Digital Filter connection trees.
 //
 // It should be used as the root/top element of the connection tree
@@ -666,9 +687,11 @@ case {
 //
 // Note: 
 // Only usable as the root of a tree
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.8
 //----------------------------------------------------------
 declare u_Switch author "Dirk Roosenburg";
@@ -689,7 +712,8 @@ case {
 //TODO - add mobius transform or alpha transform versions
 
 //----------------------`(wd.)capacitor`--------------------------
-// Capacitor.
+// Adapted Capacitor
+//
 // A basic adaptor implementing a capacitor for use within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
@@ -705,12 +729,14 @@ case {
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared.
-// * `R` : Capacitance/Impedence of the capacitor being modeled in Farads. 
+// * `R` : Capacitance/Impedance of the capacitor being modeled in Farads. 
 //
 // Note:
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.3.1
 //----------------------------------------------------------
 declare capacitor author "Dirk Roosenburg";
@@ -727,7 +753,8 @@ case{
 };
 
 //----------------------`(wd.)capacitor_output`--------------------------
-// Capacitor + voltage out.
+// Adapted Capacitor + voltage out
+//
 // A basic adaptor implementing a capacitor for use within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
@@ -749,7 +776,9 @@ case{
 // Note: 
 // The adaptor must be declared as a seperate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.3.1
 //----------------------------------------------------------
 declare capacitor_output author "Dirk Roosenburg";
@@ -769,7 +798,8 @@ case{
 };
 
 //----------------------`(wd.)inductor`--------------------------
-// Inductor.
+// Unadapted Inductor
+//
 // A basic adaptor implementing an inductor for use within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
@@ -785,12 +815,14 @@ case{
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared
-// * `R` : Inductance/Impedence of the inductor being modeled in Henries
+// * `R` : Inductance/Impedance of the inductor being modeled in Henries
 //
 // Note: 
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.3.2
 //----------------------------------------------------------
 declare inductor author "Dirk Roosenburg";
@@ -807,7 +839,8 @@ case{
 };
 
 //----------------------`(wd.)inductor_output`--------------------------
-// Inductor + Voltage out.
+// Unadapted Inductor + Voltage out
+//
 // A basic adaptor implementing an inductor for use within Wave Digital Filter connection trees.
 //
 // It should be used as a leaf/terminating element of the connection tree.
@@ -824,12 +857,14 @@ case{
 // Where:
 //
 // * `i`: index used by model-building functions. Should never be user declared
-// * `R` : Inductance/Impedence of the inductor being modeled in Henries
+// * `R` : Inductance/Impedance of the inductor being modeled in Henries
 //
 // Note: 
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.3.2
 //----------------------------------------------------------
 declare inductor_output author "Dirk Roosenburg";
@@ -852,7 +887,8 @@ case{
 //========================================================================================
 
 //----------------------`(wd.)u_idealDiode`--------------------------
-// Ideal Diode (Unadapted).
+// Unadapted Ideal Diode
+//
 // An unadapted adaptor implementing an ideal diode for Wave Digital Filter connection trees.
 //
 // It should be used as the root/top element of the connection tree.
@@ -866,7 +902,9 @@ case{
 // Note: 
 // Only usable as the root of a tree
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 3.2.3
 //----------------------------------------------------------
 declare u_idealDiode author "Dirk Roosenburg";
@@ -883,7 +921,8 @@ case{
 };
 
 //----------------------`(wd.)u_chua`--------------------------
-// Chua Diode (Unadapted).
+// Unadapted Chua Diode
+//
 // An adaptor implementing the chua diode / non-linear resistor within Wave Digital Filter connection trees.
 //
 // It should be used as the root/top element of the connection tree.
@@ -904,9 +943,11 @@ case{
 //
 // Note: 
 // Only usable as the root of a tree.
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // Meerkotter and Scholz, "Digital Simulation of Nonlinear Circuits by Wave Digital Filter Principles"
 //----------------------------------------------------------
 declare u_chua author "Dirk Roosenburg";
@@ -930,7 +971,7 @@ case{
 
 //----------------------`(wd.)lambert`--------------------------
 // An implementation of the lambert function.
-// It uses Halley's method of iteration to aproximate the output.
+// It uses Halley's method of iteration to approximate the output.
 // Included in the WD library for use in non-linear diode models.
 // Adapted from  K M Brigg's c++ lambert function approximator.
 //
@@ -983,7 +1024,8 @@ with{
 
 
 //----------------------`(wd.)u_diodePair`--------------------------
-// A pair of diodes facing in opposite directions.
+// Unadapted pair of diodes facing in opposite directions.
+//
 // An unadapted adaptor implementing two antiparallel diodes for Wave Digital Filter connection trees.
 // The behavior is approximated using Schottkey's ideal diode law.
 //
@@ -1003,7 +1045,9 @@ with{
 // Note: 
 // Only usable as the root of a tree.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner et al. "An Improved and Generalized Diode Clipper Model for Wave Digital Filters"
 //----------------------------------------------------------
 declare u_diodePair author "Dirk Roosenburg";
@@ -1021,14 +1065,15 @@ case{
 
 
 //----------------------`(wd.)u_diodeSingle`--------------------------
-// A single diode.
+// Unadapted single diode.
+//
 // An unadapted adaptor implementing a single diode for Wave Digital Filter connection trees.
 // The behavior is approximated using Schottkey's ideal diode law.
 //
 // #### Usage
 //
 // ```
-// d1 = u_diodeSingle(i, Is, Vt);
+// d1(i) = u_diodeSingle(i, Is, Vt);
 // buildtree( d1 : B );
 // ```
 //
@@ -1041,7 +1086,9 @@ case{
 // Note: 
 // Only usable as the root of a tree
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner et al. "An Improved and Generalized Diode Clipper Model for Wave Digital Filters"
 //----------------------------------------------------------
 declare u_diodeSingle author "Dirk Roosenburg";
@@ -1058,14 +1105,15 @@ case{
 };
 
 //----------------------`(wd.)u_diodeAntiparallel`--------------------------
-// A set of antiparallel diodes with M diodes facing forwards and N diodes facing backwards.
+// Unadapted set of antiparallel diodes with M diodes facing forwards and N diodes facing backwards.
+//
 // An unadapted adaptor implementing antiparallel diodes for Wave Digital Filter connection trees.
 // The behavior is approximated using Schottkey's ideal diode law.
 //
 // #### Usage
 //
 // ```
-// d1 = u_diodeAntiparallel(i, Is, Vt);
+// d1(i) = u_diodeAntiparallel(i, Is, Vt);
 // buildtree( d1 : B );
 // ```
 //
@@ -1078,7 +1126,9 @@ case{
 // Note: 
 // Only usable as the root of a tree
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner et al. "An Improved and Generalized Diode Clipper Model for Wave Digital Filters"
 //----------------------------------------------------------
 declare u_diodeAntiparallel author "Dirk Roosenburg";
@@ -1106,7 +1156,8 @@ case{
 
 
 //----------------------`(wd.)u_parallel_2`--------------------------
-// 2-port parallel adaptor (Unadapted).
+// Unadapted 2-port parallel connection
+//
 // An unadapted adaptor implementing a 2-port parallel connection between adaptors for Wave Digital Filter connection trees.
 // Elements connected to this adaptor will behave as if connected in parallel in circuit.
 //
@@ -1120,7 +1171,9 @@ case{
 // Only usable as the root of a tree.
 // This adaptor has no user-accessible parameters. 
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
 declare u_parallel_2 author "Dirk Roosenburg";
@@ -1140,7 +1193,8 @@ case{
 
 
 //----------------------`(wd.)parallel_2`--------------------------
-// 2-port parallel adaptor.
+// Adapted 2-port parallel connection
+//
 // An adaptor implementing a 2-port parallel connection between adaptors for Wave Digital Filter connection trees.
 // Elements connected to this adaptor will behave as if connected in parallel in circuit.
 //
@@ -1154,7 +1208,9 @@ case{
 // This adaptor has no user-accessible parameters. 
 // It should be used within the connection tree with one previous and one forward adaptor.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
 declare parallel_2 author "Dirk Roosenburg";
@@ -1179,7 +1235,8 @@ case{
 };
 
 //----------------------`(wd.)u_series_2`--------------------------
-// 2-port series adaptor (Unadapted).
+// Unadapted 2-port series connection
+//
 // An unadapted adaptor implementing a 2-port series connection between adaptors for Wave Digital Filter connection trees.
 // Elements connected to this adaptor will behave as if connected in series in circuit.
 //
@@ -1193,7 +1250,9 @@ case{
 // Only usable as the root of a tree.
 // This adaptor has no user-accessible parameters. 
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
 declare u_series_2 author "Dirk Roosenburg";
@@ -1213,7 +1272,8 @@ case{
 
 
 //----------------------`(wd.)series_2`--------------------------
-// 2-port series adaptor.
+// Adapted 2-port series connection
+//
 // An adaptor implementing a 2-port series connection between adaptors for Wave Digital Filter connection trees.
 // Elements connected to this adaptor will behave as if connected in series in circuit.
 //
@@ -1227,7 +1287,9 @@ case{
 // This adaptor has no user-accessible parameters. 
 // It should be used within the connection tree with one previous and one forward adaptor.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
 declare series_2 author "Dirk Roosenburg";
@@ -1253,7 +1315,8 @@ case{
 
 
 //----------------------`(wd.)parallel_current`--------------------------
-// 2-port parallel adaptor + ideal current source.
+// Adapted 2-port parallel connection + ideal current source
+//
 // An adaptor implementing a 2-port series connection and internal idealized current source between adaptors for Wave Digital Filter connection trees.
 // This adaptor connects the two connected elements and an additional ideal current source in parallel.
 //
@@ -1270,10 +1333,12 @@ case{
 // * `jin` :  Current through the ideal current source in Amps
 //
 // Note: 
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // It should be used within a connection tree with one previous and one forward adaptor.
 // Correct implementation is shown above.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.2
 //----------------------------------------------------------
 declare parallel_current author "Dirk Roosenburg";
@@ -1299,7 +1364,8 @@ case{
 
 
 //----------------------`(wd.)series_voltage`--------------------------
-// 2-port series adaptor + ideal voltage source.
+// Adapted 2-port series connection + ideal voltage source.
+//
 // An adaptor implementing a 2-port series connection and internal ideal voltage source between adaptors for Wave Digital Filter connection trees.
 // This adaptor connects the two connected adaptors and an additional ideal voltage source in series.
 //
@@ -1316,9 +1382,11 @@ case{
 // * `vin` :  voltage across the ideal current source in Volts
 //
 // Note: 
-// The adaptor must be declared as a seperate function before integration into the connection tree.
+// The adaptor must be declared as a separate function before integration into the connection tree.
 // It should be used within the connection tree with one previous and one forward adaptor.
+//
 // #### Reference
+//
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.2
 //----------------------------------------------------------
 declare series_voltage author "Dirk Roosenburg";
@@ -1348,7 +1416,8 @@ case{
 
 
 //----------------------`(wd.)parallel`--------------------------
-// 3-port parallel adaptor.
+// Adapted 3-port parallel connection
+//
 // An adaptor implementing a 3-port parallel connection between adaptors for Wave Digital Filter connection trees.
 // This adaptor is used to connect adaptors simulating components connected in parallel in the circuit.
 //
@@ -1361,7 +1430,9 @@ case{
 // Note: 
 // This adaptor has no user-accessible parameters. 
 // It should be used within the connection tree with one previous and two forward adaptors.
+//
 // #### Reference
+//
 // K. Werner Dissertation, 1.5.1
 //----------------------------------------------------------
 declare parallel author "Dirk Roosenburg";
@@ -1389,7 +1460,8 @@ case{
 
 
 //----------------------`(wd.)series`--------------------------
-// 3-port series adaptor.
+// Adapted 3-port series connection
+//
 // An adaptor implementing a 3-port series connection between adaptors for Wave Digital Filter connection trees.
 // This adaptor is used to connect adaptors simulating components connected in series in the circuit.
 //
@@ -1403,7 +1475,9 @@ case{
 // Note: 
 // This adaptor has no user-accessible parameters. 
 // It should be used within the connection tree with one previous and two forward adaptors.
+//
 // #### Reference
+//
 // K. Werner Dissertation, 1.5.2
 //----------------------------------------------------------
 declare zero author "Dirk Roosenburg";
@@ -1430,7 +1504,6 @@ case{
 };
 
 
-
 //constant declrations for library
 p = 1; 
 //some functions are declared in terms of p (rho) in advance of support of multiple kinds of waves within the system. 
@@ -1444,9 +1517,10 @@ t = 1/ma.SR; //sampling rate reference for reactive elements
 
 
 //----------------------`(wd.)builddown`--------------------------
-// Function for building the strucutre for calculating waves travling down the WD connection tree.
+// Function for building the structure for calculating waves traveling down the WD connection tree.
+//
 // It recursively steps through the given tree, parametrizes the adaptors, and builds an algorithm.
-// It is used in conjunction with the buildup() function to create a full structure.
+// It is used in conjunction with the buildup() function to create a model.
 //
 // #### Usage
 //
@@ -1514,7 +1588,8 @@ builddown(A) = A(0);
 
 
 //----------------------`(wd.)buildup`--------------------------
-// Function for building the strucutre for calculating waves travling up the WD connection tree.
+// Function for building the structure for calculating waves traveling up the WD connection tree.
+//
 // It recursively steps through the given tree, parametrizes the adaptors, and builds an algorithm.
 // It is used in conjunction with the builddown() function to create a full structure.
 //
@@ -1594,6 +1669,7 @@ buildup(A) = A(1);
 
 //----------------------`(wd.)getres`--------------------------
 // Function for determining the upward-facing port resistance of a partial WD connection tree.
+//
 // It recursively steps through the given tree, parametrizes the adaptors, and builds and algorithm.
 // It is used by the buildup and builddown functions but is also helpful in testing.
 //
@@ -1618,6 +1694,7 @@ getres(A) = A(2);
 
 //----------------------`(wd.)parres`--------------------------
 // Function for determining the upward-facing port resistance of a partial WD connection tree.
+//
 // It recursively steps through the given tree, parametrizes the adaptors, and builds and algorithm.
 // It is used by the buildup and builddown functions but is also helpful in testing.
 // This function is a parallelized version of getres.
@@ -1642,7 +1719,8 @@ parres(Ap) = getres(Ap);
 
 
 //----------------------`(wd.)buildout`--------------------------
-// Function for creating the output matrix for a WD connection tree.
+// Function for creating the output matrix for a WD model from a WD connection tree.
+//
 // It recursively steps through the given tree and creates an output matrix passing only outputs.
 //
 // #### Usage
@@ -1671,7 +1749,8 @@ with{
 
 
 //----------------------`(wd.)buildtree`--------------------------
-// Function for building the functioning DSP model from a WD connection tree.
+// Function for building the DSP model from a WD connection tree structure.
+//
 // It recursively steps through the given tree, parametrizes the adaptors, and builds the algorithm.
 //
 // #### Usage
@@ -1692,7 +1771,7 @@ buildtree((A : B)) = builddown(A : B)~buildup(A : B) : buildout(A : B);
 //TODO
 //add input constructor. currently just performed manually. 
 //this will likely include adding additional param options to adaptors. 
-//add comments in Faust formating
+//add comments in Faust formatting
 
 
 /*******************************************************************************
