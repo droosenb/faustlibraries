@@ -314,6 +314,8 @@ case{
     with{
         R0 = R; 
     };
+}with{
+    rho = 1; 
 };
 
 
@@ -395,10 +397,12 @@ u_voltage =
 case{
     (0 , ein) => b0
     with{
-        b0(R0, a0) = 2*R0^(p-1)*ein -a0;
+        b0(R0, a0) = 2*R0^(rho-1)*ein -a0;
     };
     (1, ein) => !, !; 
     (2, ein) => 0; 
+}with{
+    rho = 1; 
 };
 
 
@@ -438,10 +442,12 @@ u_current =
 case{
     (0 , jin) => b0
     with{
-        b0(R0, a0) = 2*R0^(p)*jin + a0;
+        b0(R0, a0) = 2*R0^(rho)*jin + a0;
     };
     (1, jin) => !, !; 
     (2, jin) => 0; 
+}with{
+    rho = 1; 
 };
 
 //----------------------`(wd.)resVoltage`--------------------------
@@ -479,12 +485,14 @@ declare resVoltage copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosen
 declare resVoltage license "MIT-style STK-4.3 license";
 resVoltage = 
 case{
-    (0, R, ein) => !, R^(1-p)*ein;
+    (0, R, ein) => !, R^(1-rho)*ein;
     (1, R, ein) => _; 
     (2, R, ein) => R0
     with {
         R0 = R; 
     };
+}with{
+    rho = 1; 
 }; 
 
 //----------------------`(wd.)resVoltage_Vout`--------------------------
@@ -523,12 +531,14 @@ declare resVoltage_Vout copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.r
 declare resVoltage_Vout license "MIT-style STK-4.3 license";
 resVoltage_Vout = 
 case{
-    (0, R, ein) => R^(1-p)*ein, _*.5 + R^(1-p)*ein*.5;
+    (0, R, ein) => R^(1-rho)*ein, _*.5 + R^(1-rho)*ein*.5;
     (1, R, ein) => _, !; 
     (2, R, ein) => R0
     with {
         R0 = R; 
     };
+}with{
+    rho = 1; 
 }; 
 
 //----------------------`(wd.)u_resVoltage`--------------------------
@@ -569,11 +579,13 @@ u_resVoltage =
 case {
     (0, R, ein) => b0
     with{
-        b0(R0, a0) = a0*(R - R0)/(R+R0) + ein*(2*R0^p)/(R + R0);
+        b0(R0, a0) = a0*(R - R0)/(R+R0) + ein*(2*R0^rho)/(R + R0);
     };
     (1, R, ein) => !, !; 
     (2, R, ein) => 0; 
 
+}with{
+    rho = 1; 
 };
 
 
@@ -612,12 +624,14 @@ declare resCurrent copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosen
 declare resCurrent license "MIT-style STK-4.3 license";
 resCurrent =
 case {
-    (0, R, jin) => !, 2*R^(p)*jin;
+    (0, R, jin) => !, 2*R^(rho)*jin;
     (1, R, jin) => _; 
     (2, R, jin) => R0
     with {
         R0 = R; 
     };
+}with{
+    rho = 1; //assume voltage waves
 }; 
 
 //----------------------`(wd.)u_resCurrent`--------------------------
@@ -658,11 +672,13 @@ u_resCurrent =
 case {
     (0, R, jin) => b0
     with{
-        b0(R0, a0) = a0*(R - R0)/(R + R0) + jin*(2*R*R0^p)/(R + R0);
+        b0(R0, a0) = a0*(R - R0)/(R + R0) + jin*(2*R*R0^rho)/(R + R0);
     };
     (1, R, jin) => !, !; 
     (2, R, jin) => 0; 
 
+}with{
+    rho = 1; //assume voltage waves
 };
 
 //TODO
@@ -711,7 +727,7 @@ case {
 
 //=============================Reactive One Port Adaptors=================================
 //========================================================================================
-//TODO - add mobius transform or alpha transform versions
+//TODO - add mobius transform and alpha transform digitizations
 
 //----------------------`(wd.)capacitor`--------------------------
 // Adapted Capacitor
@@ -752,6 +768,8 @@ case{
     with {
         R0 = t/(2*R); 
     };
+}with{
+    t = 1/ma.SR; //sampling interval
 };
 
 //----------------------`(wd.)capacitor_Vout`--------------------------
@@ -797,6 +815,8 @@ case{
     with {
         R0 = t/(2*R); 
     };
+}with{
+    t = 1/ma.SR; //sampling interval
 };
 
 //----------------------`(wd.)inductor`--------------------------
@@ -838,6 +858,8 @@ case{
     with {
         R0 = (2*R)/t; 
     };
+}with{
+    t = 1/ma.SR; //sampling interval
 };
 
 //----------------------`(wd.)inductor_Vout`--------------------------
@@ -883,6 +905,8 @@ case{
     with {
         R0 = (2*R)/t; 
     };
+}with{
+    t = 1/ma.SR; //sampling interval
 };
 
 //===============================Nonlinear One Port Adaptors==============================
@@ -1186,11 +1210,13 @@ case{
     (0) => u_par
     with{ 
         u_par = si.bus(4) <: b1, b2;
-        b0(R0, R1, a0, a1) = (-a0*(R0-R1) + a1*(2*R0^p*R1^(1-p)))/(R0+R1);
-        b1(R0, R1, a0, a1) = (a1*(R0-R1) + a0*(2*R0^(1-p)*R1^p))/(R0+R1);
+        b0(R0, R1, a0, a1) = (-a0*(R0-R1) + a1*(2*R0^rho*R1^(1-rho)))/(R0+R1);
+        b1(R0, R1, a0, a1) = (a1*(R0-R1) + a0*(2*R0^(1-rho)*R1^rho))/(R0+R1);
     };
     (1) => !, !, !, !;
     (2) => 0; 
+}with{
+    rho = 1; //assume voltage waves
 };
 
 
@@ -1265,11 +1291,13 @@ case{
     (0) => u_ser
     with{ 
         u_ser = si.bus(4) <: b1, b2;
-        b0(R0, R1, a0, a1) = (-a0*(R0-R1) - a1*(2*R0^p*R1^(1-p)))/(R0+R1);
-        b1(R0, R1, a0, a1) = (a1*(R0-R1) - a0*(2*R0^(1-p)*R1^p))/(R0+R1);
+        b0(R0, R1, a0, a1) = (-a0*(R0-R1) - a1*(2*R0^rho*R1^(1-rho)))/(R0+R1);
+        b1(R0, R1, a0, a1) = (a1*(R0-R1) - a0*(2*R0^(1-rho)*R1^rho))/(R0+R1);
     };
     (1) => !, !, !, !;
     (2) => 0; 
+}with{
+    rho = 1; //assume voltage waves
 };
 
 
@@ -1351,17 +1379,19 @@ case{
     (0, jin) => par_current_down
     with{
         par_current_down = b1; 
-        b1(R1, a0, a1) = a0 + R1^p*jin;  
+        b1(R1, a0, a1) = a0 + R1^rho*jin;  
     };
     (1, jin) => par_current_up
     with{
         par_current_up = b0; 
-        b0(R1, a1) = a1 + R1^p*jin; 
+        b0(R1, a1) = a1 + R1^rho*jin; 
     };
     (2, jin) => R0
     with{
         R0(R1) = R1; 
     };
+}with{
+    rho = 1; //assume voltage waves
 };
 
 
@@ -1399,17 +1429,19 @@ case{
     (0, vin) => ser_down
     with{
         ser_down = b1; 
-        b1(R1, a0, a1) = -a0 - R1^(p-1)*vin;  
+        b1(R1, a0, a1) = -a0 - R1^(rho-1)*vin;  
     };
     (1, vin) => ser_up
     with{
         ser_up = b0; 
-        b0(R1, a1) = -a1 - R1^(p-1)*vin; 
+        b0(R1, a1) = -a1 - R1^(rho-1)*vin; 
     };
     (2, vin) => R0
     with{
         R0(R1) = R1; 
     };
+}with{
+    rho = 1; //assume voltage waves
 };
 
 //----------------------`(wd.)u_transformer`--------------------------
@@ -1507,7 +1539,7 @@ with{
 
 
 //----------------------`(wd.)u_transformerActive`--------------------------
-// Unadapted ideal transformer
+// Unadapted ideal active transformer
 //
 // An adaptor implementing an ideal transformer for Wave Digital Filter connection trees.
 // The first downward-facing port corresponds to the primary winding connections, and the second downward-facing port to the secondary winding connections
@@ -1783,7 +1815,6 @@ with{
 // #### Usage
 //
 // ```
-//
 // n1(i) = genericNode(i, scatter, upRes);
 // ```
 //
@@ -1837,13 +1868,11 @@ with{
 // Function for generating a terminating/leaf node which gives the voltage across itself as a model output
 //
 // This function generates a node which is suitable for use in the connection tree structure. 
-// genericNode_Vout separates the function that it is passed into upward-going and downward-going waves
 // It also calculates the voltage across the element and gives it as a model output
 //
 // #### Usage
 //
 // ```
-//
 // n1(i) = genericNode_Vout(i, scatter, upRes);
 // ```
 //
@@ -1883,13 +1912,11 @@ case{
 // Function for generating a terminating/leaf node which gives the current through itself as a model output
 //
 // This function generates a node which is suitable for use in the connection tree structure. 
-// genericNode_Iout separates the function that it is passed into upward-going and downward-going waves
 // It also calculates the current through the element and gives it as a model output
 //
 // #### Usage
 //
 // ```
-//
 // n1(i) = genericNode_Iout(i, scatter, upRes);
 // ```
 //
@@ -1934,7 +1961,6 @@ case{
 // #### Usage
 //
 // ```
-//
 // n1(i) = u_genericNode(i, scatter);
 // ```
 //
@@ -1962,15 +1988,6 @@ with{
     block(0) = 0:!;
     block(x) = si.block(x);
 };
-
-
-
-//constant declarations for library
-p = 1; 
-//some functions are declared in terms of p (rho) in advance of support of multiple kinds of waves within the system. 
-//multiple waves are currently unsupported, only voltage waves are currently used.
-
-t = 1/ma.SR; //sampling rate reference for reactive elements
 
 
 //===============================Model Building Functions=================================
@@ -2228,11 +2245,6 @@ declare buildtree copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenb
 declare buildtree license "MIT-style STK-4.3 license";
 buildtree((A : B)) = builddown(A : B)~buildup(A : B) : buildout(A : B);
 
-
-//TODO
-//add input constructor. currently just performed manually. 
-//this will likely include adding additional param options to adaptors. 
-//add comments in Faust formatting
 
 
 /*******************************************************************************
