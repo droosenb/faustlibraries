@@ -712,10 +712,10 @@ case {
 //
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.2.8
 //----------------------------------------------------------
-declare u_Switch author "Dirk Roosenburg";
-declare u_Switch copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare u_Switch license "MIT-style STK-4.3 license";
-u_Switch = 
+declare u_switch author "Dirk Roosenburg";
+declare u_switch copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare u_switch license "MIT-style STK-4.3 license";
+u_switch = 
 case {
     (0, lambda) => b0
     with{
@@ -1083,7 +1083,7 @@ u_diodePair =
 case{
     (0, Is, Vt) => b1
     with{
-        b1(R1, a1) = a1 + 2*R1*Is - 2*Vt*lambert((R1*Is/Vt*(((a1+R1*Is)/Vt), 3) : exp));
+        b1(R1, a1) = a1 + 2*R1*Is - 2*Vt*lambert((R1*Is/Vt*(a1+R1*Is))/Vt), 3) : exp;
     };
     (1, Is, Vt) => !, !; 
     (2, Is, Vt) => 0; 
@@ -1209,7 +1209,7 @@ u_parallel2Port =
 case{
     (0) => u_par
     with{ 
-        u_par = si.bus(4) <: b1, b2;
+        u_par = si.bus(4) <: b0, b1;
         b0(R0, R1, a0, a1) = (-a0*(R0-R1) + a1*(2*R0^rho*R1^(1-rho)))/(R0+R1);
         b1(R0, R1, a0, a1) = (a1*(R0-R1) + a0*(2*R0^(1-rho)*R1^rho))/(R0+R1);
     };
@@ -1290,7 +1290,7 @@ u_series2Port =
 case{
     (0) => u_ser
     with{ 
-        u_ser = si.bus(4) <: b1, b2;
+        u_ser = si.bus(4) <: b0, b1;
         b0(R0, R1, a0, a1) = (-a0*(R0-R1) - a1*(2*R0^rho*R1^(1-rho)))/(R0+R1);
         b1(R0, R1, a0, a1) = (a1*(R0-R1) - a0*(2*R0^(1-rho)*R1^rho))/(R0+R1);
     };
@@ -1484,6 +1484,7 @@ with{
         s(1,2) = (2*n*R0^rho*R1^(1-rho))/(R0+n^2*R1);
         s(2,1) = (2*n*R0^(1-rho)*R1^rho)/(R0+n^2*R1);
         s(2,2) = (R0-n^2*R1)/(R0+n^2*R1);
+        s(i,j) = 10; 
 
         rho = 1; //assume voltage waves
     };
@@ -1530,6 +1531,7 @@ with{
         s(1,2) = (2*n*R0^rho*R1^(1-rho))/(R0+n^2*R1);
         s(2,1) = (2*n*R0^(1-rho)*R1^rho)/(R0+n^2*R1);
         s(2,2) = (R0-n^2*R1)/(R0+n^2*R1);
+        s(i,j) = 10; 
 
         rho = 1; //assume voltage waves
 
@@ -1578,6 +1580,7 @@ with{
         s(1,2) = (2*gamma1*R0^rho*R1^(1-rho))/(R0+gamma1*gamma2*R1);
         s(2,1) = ((2*gamma2*R0^(1-rho)*R1^rho/(R0+gamma1*gamma2*R1);
         s(2,2) = (R0-gamma1*gamma2*R1)/(R0+gamma1*gamma2*R1);
+        s(i,j) = 10; 
 
         rho = 1; //assume voltage waves
     };
@@ -1626,6 +1629,7 @@ with{
         s(1,2) = (2*gamma1*R0^rho*R1^(1-rho))/(R0+gamma1*gamma2*R1);
         s(2,1) = ((2*gamma2*R0^(1-rho)*R1^rho/(R0+gamma1*gamma2*R1);
         s(2,2) = (R0-gamma1*gamma2*R1)/(R0+gamma1*gamma2*R1);
+        s(i,j) = 10; 
 
         rho = 1; //assume voltage waves
 
