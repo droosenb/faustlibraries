@@ -228,7 +228,7 @@ ma = library("maths.lib");
 si = library("signals.lib");
 
 declare name "Faust Wave Digital Model Library";
-declare version "0.1.1";
+declare version "0.2.0";
 
 
 
@@ -975,7 +975,7 @@ case{
 // An implementation of the lambert function.
 // It uses Halley's method of iteration to approximate the output.
 // Included in the WD library for use in non-linear diode models.
-// Adapted from  K M Brigg's c++ lambert function approximator.
+// Adapted from  K M Brigg's c++ lambert function approximation.
 //
 // #### Usage
 //
@@ -1157,7 +1157,7 @@ case{
 //========================================================================================
 
 
-//----------------------`(wd.)u_parallel_2`--------------------------
+//----------------------`(wd.)u_parallel2Port`--------------------------
 // Unadapted 2-port parallel connection
 //
 // An unadapted adaptor implementing a 2-port parallel connection between adaptors for Wave Digital Filter connection trees.
@@ -1166,7 +1166,7 @@ case{
 // #### Usage
 //
 // ```
-// buildtree( u_parallel_2 : (A, B) );
+// buildtree( u_parallel2Port : (A, B) );
 // ```
 //
 // Note: 
@@ -1178,10 +1178,10 @@ case{
 //
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
-declare u_parallel_2 author "Dirk Roosenburg";
-declare u_parallel_2 copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare u_parallel_2 license "MIT-style STK-4.3 license";
-u_parallel_2 = 
+declare u_parallel2Port author "Dirk Roosenburg";
+declare u_parallel2Port copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare u_parallel2Port license "MIT-style STK-4.3 license";
+u_parallel2Port = 
 case{
     (0) => u_par
     with{ 
@@ -1194,7 +1194,7 @@ case{
 };
 
 
-//----------------------`(wd.)parallel_2`--------------------------
+//----------------------`(wd.)parallel2Port`--------------------------
 // Adapted 2-port parallel connection
 //
 // An adaptor implementing a 2-port parallel connection between adaptors for Wave Digital Filter connection trees.
@@ -1203,7 +1203,7 @@ case{
 // #### Usage
 //
 // ```
-// buildtree( A : parallel_2 : B );
+// buildtree( A : parallel2Port : B );
 // ```
 //
 // Note: 
@@ -1215,10 +1215,10 @@ case{
 //
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
-declare parallel_2 author "Dirk Roosenburg";
-declare parallel_2 copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare parallel_2 license "MIT-style STK-4.3 license";
-parallel_2 = 
+declare parallel2Port author "Dirk Roosenburg";
+declare parallel2Port copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare parallel2Port license "MIT-style STK-4.3 license";
+parallel2Port = 
 case{
     (0) => par_down
     with{
@@ -1236,7 +1236,7 @@ case{
     };
 };
 
-//----------------------`(wd.)u_series_2`--------------------------
+//----------------------`(wd.)u_series2Port`--------------------------
 // Unadapted 2-port series connection
 //
 // An unadapted adaptor implementing a 2-port series connection between adaptors for Wave Digital Filter connection trees.
@@ -1245,7 +1245,7 @@ case{
 // #### Usage
 //
 // ```
-// buildtree( u_series_2 : (A, B) );
+// buildtree( u_series2Port : (A, B) );
 // ```
 //
 // Note: 
@@ -1257,10 +1257,10 @@ case{
 //
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
-declare u_series_2 author "Dirk Roosenburg";
-declare u_series_2 copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare u_series_2 license "MIT-style STK-4.3 license";
-u_series_2 = 
+declare u_series2Port author "Dirk Roosenburg";
+declare u_series2Port copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare u_series2Port license "MIT-style STK-4.3 license";
+u_series2Port = 
 case{
     (0) => u_ser
     with{ 
@@ -1273,7 +1273,7 @@ case{
 };
 
 
-//----------------------`(wd.)series_2`--------------------------
+//----------------------`(wd.)series2Port`--------------------------
 // Adapted 2-port series connection
 //
 // An adaptor implementing a 2-port series connection between adaptors for Wave Digital Filter connection trees.
@@ -1282,7 +1282,7 @@ case{
 // #### Usage
 //
 // ```
-// buildtree( A : series_2 : B );
+// buildtree( A : series2Port : B );
 // ```
 //
 // Note: 
@@ -1294,10 +1294,10 @@ case{
 //
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.1
 //----------------------------------------------------------
-declare series_2 author "Dirk Roosenburg";
-declare series_2 copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare series_2 license "MIT-style STK-4.3 license";
-series_2 = 
+declare series2Port author "Dirk Roosenburg";
+declare series2Port copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare series2Port license "MIT-style STK-4.3 license";
+series2Port = 
 case{
     (0) => ser_down
     with{
@@ -1316,7 +1316,7 @@ case{
 };
 
 
-//----------------------`(wd.)parallel_current`--------------------------
+//----------------------`(wd.)parallelCurrent`--------------------------
 // Adapted 2-port parallel connection + ideal current source
 //
 // An adaptor implementing a 2-port series connection and internal idealized current source between adaptors for Wave Digital Filter connection trees.
@@ -1325,7 +1325,7 @@ case{
 // #### Usage
 //
 // ```
-// i1(i) = parallel_current(i, jin);
+// i1(i) = parallelCurrent(i, jin);
 // buildtree(A : i1 : B);
 // ```
 //
@@ -1343,10 +1343,10 @@ case{
 //
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.2
 //----------------------------------------------------------
-declare parallel_current author "Dirk Roosenburg";
-declare parallel_current copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare parallel_current license "MIT-style STK-4.3 license";
-parallel_current = 
+declare parallelCurrent author "Dirk Roosenburg";
+declare parallelCurrent copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare parallelCurrent license "MIT-style STK-4.3 license";
+parallelCurrent = 
 case{
     (0, jin) => par_current_down
     with{
@@ -1365,7 +1365,7 @@ case{
 };
 
 
-//----------------------`(wd.)series_voltage`--------------------------
+//----------------------`(wd.)seriesVoltage`--------------------------
 // Adapted 2-port series connection + ideal voltage source.
 //
 // An adaptor implementing a 2-port series connection and internal ideal voltage source between adaptors for Wave Digital Filter connection trees.
@@ -1374,7 +1374,7 @@ case{
 // #### Usage
 //
 // ```
-// v1(i) = series_voltage(i, vin)
+// v1(i) = seriesVoltage(i, vin)
 // buildtree( A : v1 : B );
 // ```
 //
@@ -1391,10 +1391,10 @@ case{
 //
 // K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.2
 //----------------------------------------------------------
-declare series_voltage author "Dirk Roosenburg";
-declare series_voltage copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare series_voltage license "MIT-style STK-4.3 license";
-series_voltage = 
+declare seriesVoltage author "Dirk Roosenburg";
+declare seriesVoltage copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare seriesVoltage license "MIT-style STK-4.3 license";
+seriesVoltage = 
 case{
     (0, vin) => ser_down
     with{
@@ -1409,6 +1409,195 @@ case{
     (2, vin) => R0
     with{
         R0(R1) = R1; 
+    };
+};
+
+//----------------------`(wd.)u_transformer`--------------------------
+// Unadapted ideal transformer
+//
+// An adaptor implementing an ideal transformer for Wave Digital Filter connection trees.
+// The first downward-facing port corresponds to the primary winding connections, and the second downward-facing port to the secondary winding connections
+//
+// #### Usage
+//
+// ```
+// t1(i) = u_transformer(i, tr);
+// buildtree(t1 : (A , B));
+// ```
+//
+// Where:
+//
+// * `i`: index used by model-building functions. Should never be user declared
+// * `tr` :  the turn ratio between the windings on the primary and secondary coils
+//
+// Note: 
+// The adaptor must be declared as a separate function before integration into the connection tree.
+// It may only be used as the root of the connection tree with two forward nodes.
+//
+//
+// #### Reference
+//
+// K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.3
+//----------------------------------------------------------
+declare u_transformer author "Dirk Roosenburg";
+declare u_transformer copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare u_transformer license "MIT-style STK-4.3 license";
+u_transformer(i, n) = u_genericNode(i, transformer_scatter)
+with{
+    matrix(M,N,f) = si.bus(N) <: ro.interleave(N,M) : par(n,N, par(m,M,*(f(m+1,n+1)))) :> si.bus(M);
+
+    transformer_scatter(R0, R1) = matrix(2, 2, s)
+    with{
+        s(1,1) =-1*(R0-n^2*R1)/(R0+n^2*R1);
+        s(1,2) = (2*n*R0^rho*R1^(1-rho))/(R0+n^2*R1);
+        s(2,1) = (2*n*R0^(1-rho)*R1^rho)/(R0+n^2*R1);
+        s(2,2) = (R0-n^2*R1)/(R0+n^2*R1);
+
+        rho = 1; //assume voltage waves
+    };
+};
+
+//----------------------`(wd.)transformer`--------------------------
+// Adapted ideal transformer
+//
+// An adaptor implementing an ideal transformer for Wave Digital Filter connection trees.
+// The upward-facing port corresponds to the primary winding connections, and the downward-facing port to the secondary winding connections
+//
+// #### Usage
+//
+// ```
+// t1(i) = transformer(i, tr);
+// buildtree(A : t1 : B);
+// ```
+//
+// Where:
+//
+// * `i`: index used by model-building functions. Should never be user declared
+// * `tr` :  the turn ratio between the windings on the primary and secondary coils
+//
+// Note: 
+// The adaptor must be declared as a separate function before integration into the connection tree.
+// It should be used within the connection tree with one backward and one forward nodes.
+//
+// #### Reference
+//
+// K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.3
+//----------------------------------------------------------
+declare transformer author "Dirk Roosenburg";
+declare transformer copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare transformer license "MIT-style STK-4.3 license";
+transformer(i, n) = genericNode(i, transformer_scatter, transformer_upPortRes)
+with{
+    matrix(M,N,f) = si.bus(N) <: ro.interleave(N,M) : par(n,N, par(m,M,*(f(m+1,n+1)))) :> si.bus(M);
+
+    transformer_upPortRes(R1) = n^2*R1; //equation for upward-facing port resistance
+
+    transformer_scatter(R1) = matrix(2, 2, s)
+    with{
+        s(1,1) =-1*(R0-n^2*R1)/(R0+n^2*R1);
+        s(1,2) = (2*n*R0^rho*R1^(1-rho))/(R0+n^2*R1);
+        s(2,1) = (2*n*R0^(1-rho)*R1^rho)/(R0+n^2*R1);
+        s(2,2) = (R0-n^2*R1)/(R0+n^2*R1);
+
+        rho = 1; //assume voltage waves
+
+        R0 = n^2*R1; //adapting condition
+    };
+};
+
+
+//----------------------`(wd.)u_transformerActive`--------------------------
+// Unadapted ideal transformer
+//
+// An adaptor implementing an ideal transformer for Wave Digital Filter connection trees.
+// The first downward-facing port corresponds to the primary winding connections, and the second downward-facing port to the secondary winding connections
+//
+// #### Usage
+//
+// ```
+// t1(i) = u_transformerActive(i, gamma1, gamma2);
+// buildtree(t1 : (A , B));
+// ```
+//
+// Where:
+//
+// * `i`: index used by model-building functions. Should never be user declared
+// * `gamma1` :  the turn ratio describing the voltage relationship between the primary and secondary coils
+// * `gamma2` :  the turn ratio describing the current relationship between the primary and secondary coils
+//
+// Note: 
+// The adaptor must be declared as a separate function before integration into the connection tree.
+// It may only be used as the root of the connection tree with two forward nodes.
+//
+// #### Reference
+//
+// K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.3
+//----------------------------------------------------------
+declare u_transformerActive author "Dirk Roosenburg";
+declare u_transformerActive copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare u_transformerActive license "MIT-style STK-4.3 license";
+u_transformerActive(i, gamma1, gamma2) = u_genericNode(i, transformerActive_scatter)
+with{
+    matrix(M,N,f) = si.bus(N) <: ro.interleave(N,M) : par(n,N, par(m,M,*(f(m+1,n+1)))) :> si.bus(M);
+
+    transformerActive_scatter(R0, R1) = matrix(2, 2, s)
+    with{
+        s(1,1) =-1*(R0-gamma1*gamma2*R1)/(R0+gamma1*gamma2*R1);
+        s(1,2) = (2*gamma1*R0^rho*R1^(1-rho))/(R0+gamma1*gamma2*R1);
+        s(2,1) = ((2*gamma2*R0^(1-rho)*R1^rho/(R0+gamma1*gamma2*R1);
+        s(2,2) = (R0-gamma1*gamma2*R1)/(R0+gamma1*gamma2*R1);
+
+        rho = 1; //assume voltage waves
+    };
+};
+
+
+//----------------------`(wd.)transformerActive`--------------------------
+// Adapted ideal active transformer
+//
+// An adaptor implementing an ideal active transformer for Wave Digital Filter connection trees.
+// The upward-facing port corresponds to the primary winding connections, and the downward-facing port to the secondary winding connections
+//
+// #### Usage
+//
+// ```
+// t1(i) = transformerActive(i, gamma1, gamma2);
+// buildtree(A : t1 : B);
+// ```
+//
+// Where:
+//
+// * `i`: index used by model-building functions. Should never be user declared
+// * `gamma1` :  the turn ratio describing the voltage relationship between the primary and secondary coils
+// * `gamma2` :  the turn ratio describing the current relationship between the primary and secondary coils
+//
+// Note: 
+// The adaptor must be declared as a separate function before integration into the connection tree.
+// It should be used within the connection tree with two forward nodes.
+//
+// #### Reference
+//
+// K. Werner, "Virtual Analog Modeling of Audio Circuitry Using Wave Digital Filters", 1.4.3
+//----------------------------------------------------------
+declare transformerActive author "Dirk Roosenburg";
+declare transformerActive copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare transformerActive license "MIT-style STK-4.3 license";
+transformerActive(i, gamma1, gamma2) = genericNode(i, transformerActive_scatter, transformerActive_upPortRes)
+with{
+    matrix(M,N,f) = si.bus(N) <: ro.interleave(N,M) : par(n,N, par(m,M,*(f(m+1,n+1)))) :> si.bus(M);
+
+    transformerActive_upPortRes(R1) = gamma1*gamma2*R1; //equation for upward-facing port resistance
+
+    transformerActive_scatter(R1) = matrix(2, 2, s)
+    with{
+        s(1,1) =-1*(R0-gamma1*gamma2*R1)/(R0+gamma1*gamma2*R1);
+        s(1,2) = (2*gamma1*R0^rho*R1^(1-rho))/(R0+gamma1*gamma2*R1);
+        s(2,1) = ((2*gamma2*R0^(1-rho)*R1^rho/(R0+gamma1*gamma2*R1);
+        s(2,2) = (R0-gamma1*gamma2*R1)/(R0+gamma1*gamma2*R1);
+
+        rho = 1; //assume voltage waves
+
+        R0 = gamma1*gamma2*R1; //adapting condition
     };
 };
 
@@ -1482,9 +1671,9 @@ case{
 //
 // K. Werner Dissertation, 1.5.2
 //----------------------------------------------------------
-declare zero author "Dirk Roosenburg";
-declare zero copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
-declare zero license "MIT-style STK-4.3 license";
+declare series author "Dirk Roosenburg";
+declare series copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare series license "MIT-style STK-4.3 license";
 series= 
 case{
 
@@ -1509,6 +1698,78 @@ case{
 //========================================================================================
 
 
+//----------------------`(wd.)u_sixportPassive`--------------------------
+// Unadapted six-port rigid connection
+//
+// An adaptor implementing a six-port passive rigid connection between elements. 
+// It implements the simplest possible rigid connection found in the Fender Bassman Tonestack circuit
+// 
+//
+// #### Usage
+//
+// ```
+//
+// tree =  u_sixportPassive : (A, B, C, D, E, F));
+// ```
+//
+// Note: 
+// This adaptor has no user-accessible parameters. 
+// It should be used within the connection tree with six forward adaptors.
+//
+// #### Reference
+//
+// K. Werner Dissertation, 2.1.5
+//----------------------------------------------------------
+declare u_sixportPassive author "Dirk Roosenburg";
+declare u_sixportPassive copyright "Copyright (C) 2020 by Dirk Roosenburg <dirk.roosenburg.30@gmail.com>";
+declare u_sixportPassive license "MIT-style STK-4.3 license";
+u_sixportPassive(i) = genericNode(i, sixport_scatter)
+with{
+    sixport_scatter(Ra, Rb, Rc, Rd, Re, Rf) =  matrix(6, 6, mtx)
+    with{
+        mtx  =
+        case{
+            (1, 1) => ((-Ra)*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf   + Rd*(Re + Rf)) +   Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (1, 2) => (2*Ra*((Rc + Re)*Rf + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (1, 3) => (2*Ra*(Rb*Rd + Re*Rf + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (1, 4) => (-1)*((2*Ra*(Rb*(Rc + Re) + Rc*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (1, 5) => (2*Ra*(Rb*Rd - Rc*Rf))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (1, 6) => (-1)*((2*Ra*(Rc*Re + Rb*(Rc + Rd + Re)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (2, 1) => (2*Rb*((Rc + Re)*Rf + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (2, 2) => (Ra*(Rd*Re - Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) - Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) +   Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (2, 3) => (-1)*((2*Rb*(Ra*Re + Re*Rf + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (2, 4) => (-2*Ra*Rb*Re + 2*Rb*Rc*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (2, 5) => (2*Rb*(Ra*(Rc + Rd) + Rc*(Rd + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (2, 6) => (-1)*((2*Rb*(Rc*Rd + Ra*(Rc + Rd + Re)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (3, 1) => (2*Rc*(Rb*Rd + Re*Rf + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (3, 2) => (-1)*((2*Rc*(Ra*Re + Re*Rf + Rd*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (3, 3) => 1 - (2*Rc*(Rd*Re + Rd*Rf + Re*Rf + Rb*(Rd + Rf) + Ra*(Rb + Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (3, 4) => (-1)*((2*Rc*(Rb*Rf + Ra*(Rb + Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (3, 5) => (-1)*((2*Rc*(Ra*(Rb + Rf) + Rb*(Rd + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (3, 6) => (2*Rc*(Rb*Rd - Ra*Re))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (4, 1) => (-1)*((2*Rd*(Rb*(Rc + Re) + Rc*(Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (4, 2) => (-2*Ra*Rd*Re + 2*Rc*Rd*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (4, 3) => (-1)*((2*Rd*(Rb*Rf + Ra*(Rb + Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (4, 4) => 1 - (2*Rd*(Rc*(Re + Rf) + Ra*(Rb + Re + Rf) + Rb*(Rc + Re + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (4, 5) => (-1)*((2*Rd*((Rb + Rc)*Rf + Ra*(Rb + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (4, 6) => (-1)*((2*Rd*((Ra + Rc)*Re + Rb*(Rc + Re)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (5, 1) => (2*Re*(Rb*Rd - Rc*Rf))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (5, 2) => (2*Re*(Ra*(Rc + Rd) + Rc*(Rd + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (5, 3) => (-1)*((2*Re*(Ra*(Rb + Rf) + Rb*(Rd + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (5, 4) => (-1)*((2*Re*((Rb + Rc)*Rf + Ra*(Rb + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (5, 5) => 1 - (2*Re*((Rb + Rc)*(Rd + Rf) + Ra*(Rb + Rc + Rd + Rf)))/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (5, 6) => (2*((Rb + Rc)*Rd + Ra*(Rc + Rd))*Re)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (6, 1) => (-1)*((2*(Rc*Re + Rb*(Rc + Rd + Re))*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (6, 2) => (-1)*((2*(Rc*Rd + Ra*(Rc + Rd + Re))*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (6, 3) => (2*(Rb*Rd - Ra*Re)*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (6, 4) => (-1)*((2*((Ra + Rc)*Re + Rb*(Rc + Re))*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf))));
+            (6, 5) => (2*((Rb + Rc)*Rd + Ra*(Rc + Rd))*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (6, 6) => 1 - (2*(Rc*(Rd + Re) + Ra*(Rc + Rd + Re) + Rb*(Rc + Rd + Re))*Rf)/(Ra*(Rd*Re + Rb*(Rc + Rd + Re) + Rd*Rf + Re*Rf + Rc*(Re + Rf)) + Rc*(Re*Rf + Rd*(Re + Rf)) + Rb*(Re*Rf + Rc*(Rd + Rf) + Rd*(Re + Rf)));
+            (i, j) => 10;
+        };
+        matrix(M,N,f) = si.bus(N) <: ro.interleave(N,M) : par(n,N, par(m,M,*(f(m+1,n+1)))) :> si.bus(M);
+    };
+};
 
 //===============================Node Creating Functions==================================
 //========================================================================================
@@ -1695,7 +1956,7 @@ u_genericNode =
 case{
     (0, scatter) => scatter;
     (1, scatter) => block(inputs(scatter));
-    (2, scatter) => 1000;
+    (2, scatter) => 1234;
 }
 with{
     block(0) = 0:!;
